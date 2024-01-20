@@ -34,9 +34,9 @@ function fetchGitHubData(username, page, perPage) {
                             <p>🔗: <a href="https://github.com/${data.login}?tab=repositories" target="_blank">https://github.com/${data.login}?tab=repositories</a> </p>
                         </div>
                         <div class="profile-data">
-                            <h1>Name: ${data.name}</h1>
-                            <p>Bio: ${data.bio}</p>
-                            <p>📍: ${data.location}</p>
+                            <h1>${data.name}</h1>
+                            <p>${data.bio}</p>
+                            <p>Location : ${data.location}</p>
                             <p>Twitter: <a href="https://twitter.com/${data.twitter_username}" target="_blank">https://twitter.com/${data.twitter_username}</a></p>
                         </div>
                     </div>
@@ -53,10 +53,16 @@ function fetchGitHubData(username, page, perPage) {
               reposContainer.innerHTML += `
                                 <div class="repo">
                                     <h3>${repo.name}</h3>
-                                    <p>${repo.description}</p>
-                                    <p>Language: ${repo.language}</p>
-                                    <p>Stars: ${repo.stargazers_count}</p>
-                                    <p>Forks: ${repo.forks_count}</p>
+                                    ${
+                                      repo.description
+                                        ? `<p>${repo.description}</p>`
+                                        : ""
+                                    }
+                                    ${
+                                      repo.topics.length > 0
+                                        ? renderTopics(repo.topics)
+                                        : ""
+                                    }
                                 </div>`;
             });
 
@@ -72,6 +78,13 @@ function fetchGitHubData(username, page, perPage) {
       hideLoader();
       console.error("Error fetching user data:", error);
     });
+}
+
+function renderTopics(topics) {
+  const topicsHTML = topics
+    .map((topic) => `<span class="topic">${topic}</span>`)
+    .join("");
+  return `<div class="topics-container">${topicsHTML}</div>`;
 }
 
 function searchGitHub() {
