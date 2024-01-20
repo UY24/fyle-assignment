@@ -9,7 +9,7 @@
   </head>
   <body>
     <nav>
-      <div class="main-nav container">
+      <div class="main-nav">
         <h1>Github Search</h1>
         <div class="search-bar">
           <input
@@ -29,12 +29,30 @@
       </div>
     </nav>
     <div id="profile-container"></div>
-    <main>
-      <div id="enter-username-message" class="container">
-        <h1>Please Enter a GitHub Username to Search</h1>
+    <div id="loader" class="loader"></div>
+
+    <div id="repos-container" class="repos-grid container"></div>
+    <div class="pagination-bar">
+      <select
+        class="repos-per-page-selector"
+        id="repos-per-page"
+        onchange="changeReposPerPage()"
+      >
+        <option value="10">10 per page</option>
+        <option value="25">25 per page</option>
+        <option value="50">50 per page</option>
+        <option value="75">75 per page</option>
+        <option value="100">100 per page</option>
+      </select>
+
+      <div id="pagination" class="pagination-buttons">
+        <button class="pagination-button" onclick="changePage(-1)">
+          Previous
+        </button>
+        <span id="page-number" class="page-number">1</span>
+        <button class="pagination-button" onclick="changePage(1)">Next</button>
       </div>
-      <div class="cards-container container" id="cards-container"></div>
-    </main>
+    </div>
 
     <script src="script.js"></script>
   </body>
